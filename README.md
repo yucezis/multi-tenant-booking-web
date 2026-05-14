@@ -6,23 +6,6 @@ A multi-tenant SaaS appointment platform for beauty centers. When a business joi
 
 ---
 
-## Table of Contents
-
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [Architecture](#-architecture)
-- [User Roles](#-user-roles)
-- [Appointment Flow](#-appointment-flow)
-- [Database Schema](#-database-schema)
-- [Getting Started](#-getting-started)
-- [Environment Variables](#-environment-variables)
-- [URL Structure](#-url-structure)
-- [Background Jobs](#-background-jobs)
-- [Security](#-security)
-- [Development Plan](#-development-plan)
-
----
-
 ## Features
 
 - **Multi-tenant architecture** — Host hundreds of businesses on a single platform with full data isolation
@@ -36,7 +19,7 @@ A multi-tenant SaaS appointment platform for beauty centers. When a business joi
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |-------|-----------|
@@ -152,51 +135,6 @@ Completed  NoShow    Cancelled
 - Cancellation is allowed if the appointment is **more than 24 hours** away
 - If less than 24 hours remain, the link responds with `"Cancellation period has expired"`
 - When cancelled, an instant notification is pushed to the admin panel via **SignalR**
-
----
-
-## Database Schema
-
-### Core Tables
-
-**Tenants** — Business record
-| Column | Description |
-|--------|-------------|
-| Id (PK) | GUID |
-| Name | Business name |
-| Slug | URL slug — unique, lowercase (`lale-guzellik`) |
-| LogoUrl | CDN logo URL |
-| WorkingHoursJson | Day-based working hours (JSON) |
-| IsActive | Super Admin approval status |
-
-**Staff** — Staff and administrators
-| Column | Description |
-|--------|-------------|
-| TenantId (FK) | Global Query Filter operates on this |
-| Role | Admin \| Staff \| SuperAdmin |
-| WorkingScheduleJson | Day and time based work schedule (JSON) |
-
-**Appointments** — Appointments
-| Column | Description |
-|--------|-------------|
-| Status | Pending \| Confirmed \| Completed \| Cancelled \| NoShow |
-| CancellationToken | Magic link GUID token |
-| OtpCode | 6-digit OTP (hashed) |
-| OtpExpiresAt | 15-minute validity window |
-| GdprConsentAt | GDPR consent UTC timestamp |
-| RowVersion | EF Core Optimistic Concurrency token |
-
-### Relationship Summary
-
-```
-Tenant ──────────────── Staff          (One-to-Many)
-Tenant ──────────────── Services       (One-to-Many)
-Tenant ──────────────── Resources      (One-to-Many)
-Staff ◄──────────────── StaffServices ──────────────► Services   (Many-to-Many)
-Services ◄───────────── ServiceResources ───────────► Resources  (Many-to-Many)
-Staff ──────────────────────────────────────────────► Appointments
-Staff ──────────────────────────────────────────────► UnavailabilityBlocks
-```
 
 ---
 
@@ -364,6 +302,25 @@ Live appointment data is always fetched from the DB. Only rarely-changing data i
 
 ---
 
+## ✨ About the Developer
+
+This project is developed and maintained by **Zişan Yüce**.
+
+**Connect with me:**
+- 💼 Full-Stack Developer 
+- 🌐 Portfolio: [zisan-yuce.vercel.app](https://zisan-yuce.vercel.app/)
+- 📧 Email: yucezisan@gmail.com
+- 🔗 LinkedIn: [linkedin.com/in/yucezisan](www.linkedin.com/in/zisanyuce)
+- 🐙 GitHub: [@yucezis](https://github.com/yucezis)
+
+*Open to collaboration and feedback!*
+
+---
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
+---
+
+
+⭐ **If you like this project, don't forget to give it a star!!**
